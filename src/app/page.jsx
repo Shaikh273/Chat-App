@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { createMessage, createUserChat, getAllChats, getAllUsers } from '@/firebase/database';
 import { uuidv4 } from '@firebase/util';
 import { useEffect, useState } from 'react';
+import { onValue } from 'firebase/database';
 
 export default function Home() {
 
@@ -67,6 +68,21 @@ export default function Home() {
     getAllUsersData();
   }, [])
 
+  useEffect(() => {
+    const chatId = currentUser + otherUser;
+    const chatsRef = ref(db, 'chats/' + chatId + '/message');
+
+    const messageListener = onValue(chatsRef, (snapshot) => {
+      const data = snapshot.val();
+      setMessages(data || []);
+    });
+
+    return () => {
+      off(messageListener);
+    };
+
+  }, [currentUser, otherUser]);
+
   return (
     <div className='w-full h-[100vh] flex justify-center items-center'>
       <ChatContainer>
@@ -78,7 +94,7 @@ export default function Home() {
               <ChatItem
                 key={key}
                 data={data}
-                onClick={() => setActiveChat({ ...data, uid: key })}
+              // onClick={() => setActiveChat({ ...data, uid: key })}
               />
             ))
           ) : (

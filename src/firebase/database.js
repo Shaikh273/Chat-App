@@ -44,6 +44,8 @@ export const getAllUsers = () => {
     });
 }
 
+
+
 export const getAllChats = () => {
     return new Promise(async (resolve, reject) => {
         const user = await getCurrentUser();
