@@ -9,22 +9,21 @@ const ChatItem = ({ data, msg, onClick }) => {
         >
             <Image
                 className="object-cover rounded-full"
-                src='https://images.unsplash.com/photo-1608889175123-8ee362201f81?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                // src={data.avatar}
+                src={data?.avatar}
                 alt="Avatar"
                 width={45}
                 height={45}
             />
             <div className="flex flex-col ml-[10px]">
                 <p className="text-primary text-[15px] font-bold">
-                    {/* {data.name} */} Alan Wake
+                    {data?.fullName}
                 </p>
-                {/* {msg && (
+                {msg && (
                     <p className="text-[12px] text-[#959595]">
                         Lorem ipsum dolor sit amet, consectetur.
                     </p>
-                )} */}
-                <p className="text-[12px] text-[#959595]">Lorem ipsum dolor sit amet, consectetur.</p>
+                )}
+                {/* <p className="text-[12px] text-[#959595]">Lorem ipsum dolor sit amet, consectetur.</p> */}
             </div>
         </div>
     );

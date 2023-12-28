@@ -7,8 +7,8 @@ import React from "react";
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signUp } from '@/firebase/auth';
-import { useRouter } from 'next/navigation';
+import { login } from "@/firebase/auth";
+import { useRouter } from "next/navigation";
 
 const schema = Yup.object().shape({
     email: Yup.string()
@@ -16,29 +16,26 @@ const schema = Yup.object().shape({
         .required('Email is required.'),
     password: Yup.string()
         .matches(
-            /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{6,}$/,
-            'Password must contain 1 number 1 Captial latter one small latter and minimum length should be 5.')
+            /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{5,}$/,
+            'Password must contain 1 number 1 Captial latter one small latter and minimum length should be 5.'
+        )
         .required('Password is required.'),
-    fullName: Yup.string()
-        .min(2, 'Full name should be at least 2 character')
-        .required('Full name is required.'),
 });
 
-const SignUp = () => {
+const Login = () => {
+
     const router = useRouter();
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors }
     } = useForm({ resolver: yupResolver(schema) });
 
-    const submitSignUp = (values) => {
-        signUp(values.email, values.password, values.fullName, values.avatar)
-            .then(
-                () => {
-                    router.replace('/');
-                }
-            );
+    // const router = useRouter();
+    const submitLogin = (values) => {
+        login(values.email, values.password).then(() => {
+            router.replace('/');
+        });
     };
 
     return <div className="flex w-full h-[100vh] justify-center items-center bg-[#e6e6e6] relative">
@@ -55,19 +52,11 @@ const SignUp = () => {
             </div>
             <div className="w-[60%] h-full flex flex-col items-center justify-center">
                 <h6 className="text-primary text-[26px] font-medium mb-[40px]">
-                    Sign Up
+                    Login
                 </h6>
                 <form
                     className="w-full flex flex-col items-center"
-                    onSubmit={handleSubmit(submitSignUp)}
-                >
-                    <Input
-                        register={register}
-                        name="fullName"
-                        placeholder="Enter your full name"
-                        className="mb-[20px]"
-                        error={errors.fullName?.message}
-                    />
+                    onSubmit={handleSubmit(submitLogin)}                >
                     <Input
                         register={register}
                         name="email"
@@ -75,13 +64,7 @@ const SignUp = () => {
                         error={errors.email?.message}
                         className="mb-[20px]"
                     />
-                    <Input
-                        register={register}
-                        name="avatar"
-                        placeholder="Enter your avatar URL"
-                        error={errors.avatar?.message}
-                        className="mb-[20px]"
-                    />
+
                     <Input
                         register={register}
                         name="password"
@@ -90,12 +73,13 @@ const SignUp = () => {
                         error={errors.password?.message}
                         className="mb-[30px]"
                     />
-                    <Button type="submit">Sign up</Button>
+
+                    <Button type="submit">Login</Button>
                 </form>
                 <div className="flex items-center mt-[20px]">
-                    <p className="text-gray-500 mr-[10px]">Already have an account?</p>
-                    <Link href="/login" className="text-primary text-[16px]">
-                        Login
+                    <p className="text-gray-500 mr-[10px]">Don't have an account?</p>
+                    <Link href="/signup" className="text-primary text-[16px]">
+                        Signup
                     </Link>
                 </div>
             </div>
@@ -103,4 +87,4 @@ const SignUp = () => {
     </div>
 }
 
-export default SignUp;
+export default Login;

@@ -10,14 +10,15 @@ const Input = ({
   register,
   error = '',
   required = false,
+
 }) => (
-  <div className={`w-[75%] ${className}`}>
+  <div className={`w-[50%] ${className}`}>
     <input
-      // {...register(name, { required })}
+      {...register(name, { required })}
       name={name}
       placeholder={placeholder}
       type={type}
-      className={`px-[15px] text-[16px] w-full h-[45px] rounded-full border-[1px] ourline-[1px] outline-primary border-gray-400 ${className}`}
+      className={`px-[15px] text-black text-[16px] w-full h-[45px] rounded-full border-[1px] ourline-[1px] outline-primary border-gray-400 ${className}`}
     />
     <ErrorMsg error={error} />
   </div>

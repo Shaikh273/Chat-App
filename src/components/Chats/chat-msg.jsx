@@ -22,7 +22,7 @@ const ChatMsg = ({ type = 'receiver', data }) => {
             />
             <p className={msgClasses}>
                 {/* {data.message} */}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ullam quidem soluta, explicabo corrupti fugit aut perferendis consequuntur, molestias animi dolorum quasi?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ullam quidem soluta,
             </p>
         </div>
     );
